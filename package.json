@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:style": "postcss -m -u postcss-cssnext -u cssnano -o dist/style/main.min.css src/style/*.css",
-    "build:script": "uglifyjs src/script/*.js -m -c --source-map -o dist/script/main.min.js",
+    "build:script": "uglifyjs src/script/*.js -o dist/script/main.min.js --source-map url=main.min.js.map  -m -c",
     "build": "npm run build:style && npm run build:script",
     "postinstall": "run-s build watch"
   },
