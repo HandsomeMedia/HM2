@@ -4,13 +4,26 @@
   "description": "Handsome Media portfolio site",
   "main": "index.js",
   "scripts": {
-    "build:css": "postcss -u postcss-cssnext -u cssnano -o dist/css src/css/*",
+    "build:style": "postcss -m -u postcss-cssnext -u cssnano -o dist/style/main.min.css src/style/*.css",
+    "build:script": "uglifyjs src/script/*.js -m -c --source-map -o dist/script/main.min.js",
+    "build": "npm run build:style && npm run build:script",
     "postinstall": "run-s build watch"
   },
   "author": "Amrir Toufali",
   "license": "ISC",
   "devDependencies": {
+    "cssnano": "^3.10.0",
     "postcss-cli": "^4.1.0",
-    "postcss-cssnext": "^2.11.0"
-  }
+    "postcss-cssnext": "^2.11.0",
+    "uglify-js": "^3.0.24"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HandsomeMedia/HM2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HandsomeMedia/HM2/issues"
+  },
+  "homepage": "https://github.com/HandsomeMedia/HM2#readme"
 }

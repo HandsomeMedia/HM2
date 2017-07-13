@@ -27,7 +27,7 @@ html{
 body{
     height: 100%;
     font: normal 12px/100% Arial, sans-serif;
-    background: black url(img/bg.jpg);
+    background: black url(../media/bg.jpg);
     text-align: center;
     color: #efe8de;
     overflow: hidden;
@@ -142,7 +142,7 @@ body>header{
     width: 100%;
     height: 50px;
     text-align: left;
-    background: url(img/bg.jpg);
+    background: url(../media/bg.jpg);
     border-bottom: 1px solid #454545;
     padding: 8px 12px;
     box-sizing: border-box;
@@ -179,7 +179,7 @@ body>header>.sectionName{
     color: #efe8de;
     border: 2px solid #efe8de;
     border-radius: 4px;
-    background: rgba(128,128,128,.3) url(img/tagIco.svg) no-repeat 8px 50%/12px auto;
+    background: rgba(128,128,128,.3) url(../media/tagIco.svg) no-repeat 8px 50%/12px auto;
     transition: opacity .5s;
 }
 
@@ -210,7 +210,7 @@ body>header>.sectionName{
     color: #b9b4ad;
     margin: 0 8px;
     padding: 10px 0 10px 16px;
-    background: url(img/tagIco.svg) no-repeat 0 50%/auto 12px;
+    background: url(../media/tagIco.svg) no-repeat 0 50%/auto 12px;
 
 }
 
@@ -268,7 +268,7 @@ body>header>.sectionName{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}   
+}
 
 #tagline>ul:nth-of-type(1){
     text-align: right;
@@ -415,7 +415,7 @@ nav:not(.hidden)>button:nth-of-type(3) .border>:first-child{
 #logo>.svgCircles>:last-child{
     fill-opacity:0;
     stroke: #efe8de;
-    stroke-width:2; 
+    stroke-width:2;
     stroke-dasharray: 0 270;
     stroke-dashoffset: 360;
     animation: circ-in2 1.5s .5s forwards;
@@ -514,7 +514,7 @@ section:nth-of-type(3){
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url(img/palm.svg) no-repeat 10% 20px/auto 100%;
+    background: url(../media/palm.svg) no-repeat 10% 20px/auto 100%;
     transition: opacity .5s
 }
 
@@ -545,11 +545,11 @@ section:nth-of-type(3)>div>h2>a{
 }
 
 section:nth-of-type(3)>div>h2>a:first-of-type{
-    background: url(img/phoneIco.svg) no-repeat 0 50%/auto 100%;
+    background: url(../media/phoneIco.svg) no-repeat 0 50%/auto 100%;
 }
 
 section:nth-of-type(3)>div>h2>a:last-of-type{
-    background: url(img/emailIco.svg) no-repeat 0 50%/auto 100%;
+    background: url(../media/emailIco.svg) no-repeat 0 50%/auto 100%;
 }
 
 section>.itemDiv{
@@ -574,7 +574,7 @@ section .item{
     flex: 0 0 320px;
     height: 320px;
     margin: 20px;
-    background: linear-gradient(to bottom, rgba(32, 32, 32, .75) 75%, transparent 100%), url(img/bg.jpg);
+    background: linear-gradient(to bottom, rgba(32, 32, 32, .75) 75%, transparent 100%), url(../media/bg.jpg);
     border: 2px solid #efe8de;
     border-radius: 4px;
     box-sizing: border-box;
@@ -619,11 +619,11 @@ section .item>a, section .item>.detailBtn{
 
 section .item>a{
     text-decoration: none;
-    background-image: url(img/linkIco.svg);
+    background-image: url(../media/linkIco.svg);
 }
 
 section .item>.detailBtn{
-    background-image: url(img/imgIco.svg);
+    background-image: url(../media/imgIco.svg);
 }
 
 section:nth-of-type(2)>.item{
@@ -705,7 +705,7 @@ section.detail>.content{
     padding: 30px calc(10% - 10px) 0;
     border-top: 1px solid #808080;
     box-sizing: border-box;
-    background: linear-gradient(to bottom, rgba(17,17,17,0), rgba(17,17,17,.75)), url(img/bg2.jpg);
+    background: linear-gradient(to bottom, rgba(17,17,17,0), rgba(17,17,17,.75)), url(../media/bg2.jpg);
     transform: translateZ(0);
 }
 
@@ -735,7 +735,7 @@ section.detail>.content>.screenshots>div{
 
 /* dummy element to keep last flex-item from stretching
 section.detail>.content>.screenshots::after{
-    content: ''; 
+    content: '';
     flex: 1 1 auto;
     max-width: 720px;
     margin: 10px;
@@ -904,18 +904,18 @@ section.detail>.content>.screenshots>div>h3{
         display: block;
         margin: 8px auto;
     }
-    
+
     body>header>#tagFilterBtn{
         max-width: 100px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    
+
     body>header>.sectionName{
         display: none;
     }
-    
+
     .hilite.block{
         max-width: 100%;
         white-space: nowrap;
@@ -925,12 +925,12 @@ section.detail>.content>.screenshots>div>h3{
 
     #tagline{
         display: none;
-    }   
+    }
 
     #tagline>ul>li{
         font-size: 7vw;
-    }   
-    
+    }
+
     section.detail>header>div>.title{
         right: 10px;
     }

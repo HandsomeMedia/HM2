@@ -1,8 +1,8 @@
 (function(){
     'use strict';
-    
+
     var bg = document.getElementById('bg'), logo = document.getElementById('logo'), nav = document.getElementsByTagName('nav')[0], navBtns = [logo].concat(Array.from(nav.getElementsByTagName('button'))), tagline = document.getElementById('tagline'), mainHeader = document.getElementById('mainHeader'), glass, loading = document.getElementById('loading'), sections = ['home'].concat(Array.from(document.getElementsByTagName('section'))), sectionNum = 0, motionData = {}, motionRaf, pointerEvt;
-    
+
     var supportsPassive = false;
     try{
         var opts = Object.defineProperty({}, 'passive', {
@@ -14,7 +14,7 @@
     }catch(e){
         console.log('passive event listeners not supported.');
     }
-    
+
     window.addEventListener('popstate', handlePopstate);
     function handlePopstate(e){
         if(!e.state){
@@ -36,13 +36,13 @@
         }
     }
 
-    Promise.all([loadImg('img/logo.svg'), loadImg('img/logo_extra.svg')]).then(function(imgArr){
+    Promise.all([loadImg('media/logo.svg'), loadImg('media/logo_extra.svg')]).then(function(imgArr){
         logo.main = imgArr[0];
         logo.main.className = 'logoMain';
         logo.i = 0; //logo is initial nav button
         logo.appendChild(logo.main);
-        
-        loadImg('img/logo_media.svg').then(function(img){
+
+        loadImg('media/logo_media.svg').then(function(img){
             img.className = 'logoMedia';
             mainHeader.insertAdjacentElement('afterbegin', img);
             mainHeader.insertAdjacentElement('afterbegin', logo.main.cloneNode());
@@ -53,12 +53,12 @@
         logo.extra = imgArr[1];
         logo.extra.className = 'logoExtra';
         logo.appendChild(logo.extra);
-        
+
         init();
     });
-    
+
     function init(){
-        loadImg('img/glass.jpg').then(function(img){
+        loadImg('media/glass.jpg').then(function(img){
             glass = img;
             glass.id = 'glass';
             glass.className = 'hidden';
@@ -73,8 +73,8 @@
                 };
             }
         });
-    }    
-    
+    }
+
     function initBg(vidName){
         var vid = document.createElement('video'), fArr = [], fTotal = 0, f0;
         var rad = Math.PI / 180, deg = 180 / Math.PI, freq = 0.75, phase = 0, scale = 1, offset = 0; //gyro constants
@@ -83,7 +83,7 @@
             killSection();
             history.replaceState(null, "Home");
         }
-        
+
         vid.hidden = true;
         vid.muted = true;
         vid.playsInline = true;
@@ -91,14 +91,14 @@
         vid.addEventListener('loadedmetadata', initCanvas);
         vid.addEventListener('canplaythrough', play);
         if(window.matchMedia('(max-height: 960px)').matches){
-            vid.src = 'vid/' + vidName + '_lo.mp4'; //960 x 720, 30fps, High 4.1, 2/2.2Mbps 
+            vid.src = 'media/' + vidName + '_lo.mp4'; //960 x 720, 30fps, High 4.1, 2/2.2Mbps
         }else{
-            vid.src = 'vid/' + vidName + '.mp4'; //1440 x 1080, 60fps, High 4.2, 4.5/5Mbps 
+            vid.src = 'media/' + vidName + '.mp4'; //1440 x 1080, 60fps, High 4.2, 4.5/5Mbps
         }
         document.body.appendChild(vid);
-        
+
         vid.load();
-        
+
         function initCanvas(){
             vid.removeEventListener('loadedmetadata', initCanvas);
 
@@ -132,7 +132,7 @@
             bg.className = 'extracting';
 
             if(typeof createImageBitmap === 'function'){
-                //extraction via Bitmap 
+                //extraction via Bitmap
                 storeImgData = function(){
                     createImageBitmap(cTemp).then(function(bitmap){ //Chrome and Firefox
                         fArr[fTotal++] = bitmap;
@@ -154,7 +154,7 @@
                         }
                     });
                 }
-                
+
                 storeImgData = function(){
                     cTemp.toBlob(function(blob){ //Safari and Edge
                         img = document.createElement('img');
@@ -172,7 +172,7 @@
                 };
             }
             requestAnimationFrame(extract);
-            
+
             function extract(){
                 cTemp.ctx.drawImage(vid, bg.sx, bg.sy, bg.sw, bg.sh, 0, 0, bg.width, bg.height);
                 storeImgData();
@@ -200,7 +200,7 @@
                 }
             }
         }
-        
+
         bg.toggleFreeze = function(freeze){
             if(freeze && glass.className === 'hidden'){
                 cancelAnimationFrame(motionRaf);
@@ -218,16 +218,16 @@
                     tagline.toggle();
                 }
             }
-            
+
         };
-        
+
         bg.initMotion = function(firstrun){
             var m, m1, z, x, y, s = firstrun ? 15 : 5, f1;
             if(f0 === undefined){
                 f0 = fTotal - 1;
             }
             motionRaf = requestAnimationFrame(update);
-            
+
             function update(){
                 if(glass.className !== 'hidden'){ //glass and section visible, freeze bg
                     f1 = 0;
@@ -258,15 +258,15 @@
                     motionRaf = null;
                 }
                 bg.ctx.drawImage(fArr[Math.floor(f0)], 0, 0);
-                
+
             }
-            
+
             /*
             function getRotationMatrix(){
                 var z = motionData.alpha * rad;
                 var x = motionData.beta * rad;
                 var y = motionData.gamma * rad;
-                
+
                 var cX = Math.cos(x);
                 var cY = Math.cos(y);
                 var cZ = Math.cos(z);
@@ -279,7 +279,7 @@
                 var m11 = cZ * cY - sZ * sX * sY;
                 var m12 = -cX * sZ;
                 var m13 = cY * sZ * sX + cZ * sY;
-                
+
 
                 var m21 = cY * sZ + cZ * sX * sY;
                 var m22 = cZ * cX;
@@ -298,7 +298,7 @@
             */
         };
     }
-    
+
     function initMotionData(){
         addEventListener('deviceorientation', motionTrigger);
         addEventListener('mousemove', motionTrigger);
@@ -322,7 +322,7 @@
             removeEventListener('deviceorientation', motionTrigger);
             removeEventListener('mousemove', motionTrigger);
             removeEventListener('touchstart', motionTrigger);
-            
+
             initNav(); //init nav using motionData.type to specify mouse or touch
             updateMotionData(e);
         }
@@ -350,7 +350,7 @@
             }
         }
     }
-    
+
     function initNav(){
         switch(motionData.type){
             case 'mouse':
@@ -361,14 +361,14 @@
                 pointerEvt = new TouchEvent('touchstart', {'view':window, 'bubbles':true, 'cancelable':true});
                 break;
         }
-        
+
         navBtns.forEach(function(btn, i){
             btn.i = i;
             btn.addEventListener(pointerEvt.type, navEvt, supportsPassive); //add listeners based on pointerEvt gathered from motion data
         });
-        
+
         mainHeader.closeBtn.addEventListener(pointerEvt.type, closeEvt, supportsPassive);
-        
+
         function closeEvt(e){
             if(sectionNum === 4){
                 killProjDetail();
@@ -377,7 +377,7 @@
                 history.replaceState(null, "Home");
             }
         }
-        
+
         function navEvt(e){
             if(e.target.i === 0){
                 window.location.reload(true);
@@ -393,17 +393,17 @@
                 history.pushState({sectionNum:sectionNum}, "Section " + sectionNum); //navigation occured via site, not forward button (don't create a new history state for forward button press)
             }
 
-        }           
+        }
     }
-    
+
     function initSection(){
         var section = sections[sectionNum];
-        
+
         if(mainHeader.tagFilterBtn){
             mainHeader.tagFilterBtn.remove(); //reset header while it's hidden
             delete mainHeader.tagFilterBtn;
         }
-        
+
         mainHeader.removeAttribute('class');
 
         switch(sectionNum){
@@ -417,9 +417,9 @@
                 mainHeader.sectionName.textContent = 'CONTACT';
                 break;
         }
-        
+
         section.removeAttribute('class');
-        
+
         function initModels(){
             var item, div, img;
             loading.removeAttribute('class');
@@ -446,22 +446,22 @@
                     section.appendChild(item);
                 });
             });
-            
+
             function showModel(e){
                 initBg(e.currentTarget.filename);
             }
         }
-        
+
         function initProjects(){
             var projListUrl = 'http://handsomemedia.com/drupal/projectlist', tagListUrl = 'http://handsomemedia.com/drupal/taglist', tagDiv = document.createElement('div'), item, div, img, btn;
-            
-            mainHeader.sectionName.textContent = 'PROJECTS';    
+
+            mainHeader.sectionName.textContent = 'PROJECTS';
             mainHeader.tagFilterBtn = document.createElement('button');
             mainHeader.tagFilterBtn.id = 'tagFilterBtn'; //create tag filter button in the header
             mainHeader.tagFilterBtn.textContent = 'All';
             mainHeader.tagFilterBtn.addEventListener(pointerEvt.type, toggleTagDiv, supportsPassive);
             mainHeader.insertBefore(mainHeader.tagFilterBtn, mainHeader.sectionName);
-            
+
             btn = document.createElement('button'); //create initial 'all' tag
             btn.textContent = mainHeader.tagFilterBtn.textContent;
             btn.className = 'blue';
@@ -469,7 +469,7 @@
             btn.url = projListUrl;
             btn.addEventListener(pointerEvt.type, showProjects, supportsPassive);
             tagDiv.appendChild(btn);
-            
+
             loadXHR(tagListUrl).then(function(response){
                 response.forEach(function(obj){ //create remaining tags
                     btn = document.createElement('button');
@@ -482,16 +482,16 @@
                     tagDiv.appendChild(btn);
                 });
             });
-            
+
             tagDiv.id = 'tagDiv';
             tagDiv.className = 'hidden';
             mainHeader.insertAdjacentElement('beforebegin', tagDiv);
-            
+
             section.itemDiv = document.createElement('div');
             section.itemDiv.className = 'itemDiv';
             section.appendChild(section.itemDiv);
             showProjects();
-                        
+
             function toggleTagDiv(){
                 if(tagDiv.className === 'hidden'){
                     tagDiv.removeAttribute('class');
@@ -499,7 +499,7 @@
                     tagDiv.className = 'hidden';
                 }
             }
-            
+
             function showProjects(e){
                 if(e){ //user clicked a tag button
                     projListUrl = e.target.url;
@@ -513,7 +513,7 @@
                         }, 300);
                     }
                 }
-                
+
                 if(mainHeader.tagFilterBtn.className === 'hidden'){
                     killProjDetail(); //tag button was pushed from Project Detail page
                 }
@@ -524,10 +524,10 @@
                     response.forEach(function(obj){
                         item = document.createElement('div');
                         item.className = 'item';
-                        
+
                         img = document.createElement('img');
                         img.alt = obj.title;
-                        item.appendChild(img);                        
+                        item.appendChild(img);
                         loadImg(obj.field_main_image, img).then(function(img){
                             img.parentNode.className = 'item visible';
                         });
@@ -536,24 +536,24 @@
                         div.className = 'title';
                         div.innerHTML = '<h2>'+obj.title+'</h2>' + '<h3 class="italic">'+obj.field_subtitle+'</h3>';
                         item.appendChild(div);
-                        
+
                         btn = document.createElement('button');
                         btn.id = obj.nid;
                         btn.className = 'detailBtn';
                         btn.textContent = 'More Details';
                         btn.addEventListener('click', initProjDetail);
                         item.appendChild(btn);
-                        
+
                         item.insertAdjacentHTML('beforeend', obj.field_link);
                         section.itemDiv.appendChild(item);
                     });
                 });
             }
-            
+
             function initProjDetail(e){
                 var item = e.target.parentNode, div, btn, dtl = document.getElementsByClassName('detail')[0], dtlHeader = document.getElementById('dtlHeader'), dtlContent = dtl.getElementsByClassName('content')[0];
                 mainHeader.sectionName.textContent = 'PROJECT DETAIL';
-                
+
                 dtl.parentNode.scrollTop = 0;
                 clearChildren(dtlHeader); //clear prev children while detail is hidden
                 clearChildren(dtlContent);
@@ -561,7 +561,7 @@
                 if(tagDiv.className !== 'hidden'){
                     toggleTagDiv();
                 }
-                
+
                 dtlHeader.bg = document.createElement('div');
                 dtlHeader.bg.style.backgroundImage = 'linear-gradient(to right, #111111, transparent, transparent, #111111), url('+item.firstChild.src+')';
                 dtlHeader.bg.appendChild(item.getElementsByClassName('title')[0].cloneNode(true));
@@ -569,7 +569,7 @@
                 void dtl.offsetWidth;
                 dtl.parentNode.removeAttribute('class');
                 section.itemDiv.className = 'itemDiv disabled';
-                
+
                 sectionNum = 4;
                 if(e.isTrusted){
                     history.pushState({sectionNum: sectionNum}, "Project Detail");
@@ -577,16 +577,16 @@
                 delay(500).then(function(){
                     loading.removeAttribute('class');
                 });
-                
+
                 Promise.all([loadXHR('http://handsomemedia.com/drupal/project/' + e.target.id), delay(501)]).then(function(arr){
                     var obj = arr[0][0], tagArr = obj.tags.split(','), parser = new DOMParser(), imgArr;
                     loading.className = 'hidden';
                     div = document.createElement('div');
                     div.innerHTML = '<h4 class="hilite">'+obj.field_summary+'</h4><hr>';
-                    div.insertAdjacentHTML('beforeend', '<h3 class="hilite block white"><img src="img/linkIco.svg"><span>'+obj.field_link+'</span></h3>');
-                    div.insertAdjacentHTML('beforeend', '<h3 class="hilite block white"><img src="img/clientIco.svg"><span>'+obj.client+' <span class="gray spacing0">'+obj.client_note+'</span></span></h3>');
-                    div.insertAdjacentHTML('beforeend', '<h3 class="hilite block white"><img src="img/techIco.svg"><span>'+obj.tech+'</span></h3>');
-                    div.insertAdjacentHTML('beforeend', '<h3 class="hilite block white"><img src="img/tagIco.svg"></h3>');
+                    div.insertAdjacentHTML('beforeend', '<h3 class="hilite block white"><img src="media/linkIco.svg"><span>'+obj.field_link+'</span></h3>');
+                    div.insertAdjacentHTML('beforeend', '<h3 class="hilite block white"><img src="media/clientIco.svg"><span>'+obj.client+' <span class="gray spacing0">'+obj.client_note+'</span></span></h3>');
+                    div.insertAdjacentHTML('beforeend', '<h3 class="hilite block white"><img src="media/techIco.svg"><span>'+obj.tech+'</span></h3>');
+                    div.insertAdjacentHTML('beforeend', '<h3 class="hilite block white"><img src="media/tagIco.svg"></h3>');
                     tagArr.forEach(function(name){
                         btn = document.createElement('button');
                         btn.textContent = name;
@@ -595,11 +595,11 @@
                         div.lastChild.appendChild(btn);
                     });
                     dtlContent.appendChild(div);
-                    
+
                     dtlContent.screenshots = document.createElement('div');
                     dtlContent.screenshots.className = 'screenshots';
                     dtlContent.appendChild(dtlContent.screenshots);
-                    
+
                     imgArr = Array.from(parser.parseFromString(obj.field_images, "text/html").getElementsByTagName('img'));
                     imgArr.forEach(function(img){
                         div = document.createElement('div');
@@ -618,14 +618,14 @@
             }
         }
     }
-    
+
     function killProjDetail(){
         mainHeader.sectionName.textContent = 'PROJECTS';
         document.getElementById('detail3d').className = 'hidden';
         mainHeader.tagFilterBtn.removeAttribute('class');
         sectionNum = 1;
         sections[sectionNum].itemDiv.className = 'itemDiv';
-    } 
+    }
 
     function killSection(){
         mainHeader.className = 'disabled';
@@ -640,7 +640,7 @@
         }
         sectionNum = 0;
     }
-    
+
     function clearChildren(parent){
         while(parent.lastChild){
             parent.lastChild.remove();
@@ -652,11 +652,11 @@
         left.total = left.children.length*50;
         left.appendChild(left.firstChild.cloneNode(true));
         left.y = 0;
-        
+
         right.total = right.children.length*50;
         right.appendChild(right.firstChild.cloneNode(true));
         right.y = 0;
-        
+
         tagline.toggle = function(){
             if(glass.className === 'hidden' && nav.className !== 'hidden' && nav.className !== 'disabled'){
                 tagline.removeAttribute('class');
@@ -668,12 +668,12 @@
                 tagline.removeEventListener('mousedown',spin);
             }
         };
-        
+
         function spin(){
             if(raf){
                 return;
             }
-            
+
             var t0 = performance.now(), tDelta;
             left.rand = Math.random();
             left.y0 = left.y;
@@ -681,10 +681,10 @@
             right.rand = Math.random();
             right.y0 = right.y;
             right.y1 = 50*Math.round(right.rand*(right.children.length/2)) + 50;
-            
+
             clearInterval(tagline.interval);
             raf = requestAnimationFrame(update);
-            
+
             function update(t1){
                 tDelta = tagline.className === 'hidden' ? 1 : Math.min(1, (t1 - t0) / d);
                 left.y = (left.y0 + left.y1 * easeOutBack(tDelta, left.rand * 2.5) - left.total) % left.total;
@@ -708,14 +708,14 @@
             }
 
         }
-        
+
         function easeOutBack(t){
             var scaledTime = (t / 1) - 1;
             return (scaledTime * scaledTime * ((magnitude + 1) * scaledTime + magnitude)) + 1;
 
-        }        
+        }
     }
-    
+
     function loadXHR(url){
         return new Promise(function(resolve, reject){
             var xhr = new XMLHttpRequest();
@@ -753,7 +753,7 @@
             }
         });
     }
-    
+
     function delay(ms){
         return new Promise(function (resolve, reject) {
             setTimeout(resolve, ms);
