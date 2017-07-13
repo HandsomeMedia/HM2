@@ -1,0 +1,16 @@
+{
+  "name": "handsomemedia",
+  "version": "1.0.0",
+  "description": "Handsome Media portfolio site",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "postcss -u postcss-cssnext -u cssnano -o dist/css src/css/*",
+    "postinstall": "run-s build watch"
+  },
+  "author": "Amrir Toufali",
+  "license": "ISC",
+  "devDependencies": {
+    "postcss-cli": "^4.1.0",
+    "postcss-cssnext": "^2.11.0"
+  }
+}
